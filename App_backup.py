@@ -5,16 +5,19 @@ import hashlib
 import secrets
 import pandas as pd
 from supabase import create_client, Client
+import base64
 
 from datetime import datetime, date, time, timedelta
 from pathlib import Path
+from PIL import Image
 
 # ==================================
 # 1. APPLICATION SETTINGS
 # ==================================
 
 st.set_page_config(
-    page_title="Student Attendance System",
+    page_title="Leef Attendance System",
+    
     page_icon="🎓",
     layout="wide"
 )
@@ -418,7 +421,34 @@ def reset_password():
 
 if "admin" not in st.session_state:
 
-    st.title("🎓 Student Attendance Monitoring System")
+    #st.title("🎓 Student Attendance Monitoring System")
+    
+    #logo = Image.open(Path(__file__).parent / "images" / "leef_logo.png")
+    
+
+    logo_path = Path(__file__).parent / "images" / "leef_logo.png"
+
+    logo_base64 = base64.b64encode(logo_path.read_bytes()).decode()
+
+    st.markdown(
+    f"""
+    <div style="width:100%; text-align:center;">
+        <img src="data:image/png;base64,{logo_base64}"
+             style="width:150px; height:auto; display:block; margin:0 auto;">
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+    st.markdown(
+    """
+    <h1 style="text-align: center; margin-top: 15px;">
+        🎓 Leef Center Attendance System
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+
+    #==========================================
 
     tab1, tab2, tab3 = st.tabs([
         "Login",
